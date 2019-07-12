@@ -1,6 +1,6 @@
 {
   "name": "@stfalcon/vuex-loading-plugin",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "Lightweight plugin for handle loading before and after action request",
   "main": "src/index.js",
   "scripts": {

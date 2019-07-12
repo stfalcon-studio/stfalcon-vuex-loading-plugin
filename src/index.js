@@ -1,23 +1,21 @@
 import { cutAction } from "./utils";
-
-const loadingModule = {
-  state: {
-    isLoading: false
-  },
-  mutations: {
-    SET_LOADING(state, value) {
-      state.isLoading = value;
-    }
-  }
-};
+import turnsModule from "./modules/turns";
+import loadingModule from "./modules/loading";
 
 const includeLoadingToAllModules = store => {
   const namespacedModules = Object.keys(store._modulesNamespaceMap);
-  store.registerModule("loading", loadingModule);
+
+  store.registerModule("loading", turnsModule);
 
   namespacedModules.forEach(moduleName => {
     const modules = moduleName.split("/").slice(0, -1);
-    store.registerModule([...modules, "loading"], loadingModule);
+
+    store.registerModule([...modules, "loading"], {
+      ...loadingModule,
+      getters: {
+        isLoading: () => store.state[modules[0]].loading.isLoading
+      }
+    });
   });
 };
 
@@ -27,10 +25,14 @@ export default store => {
   store.subscribeAction({
     before: action => {
       const moduleName = cutAction(action.type);
+
       store.commit(`${moduleName}/SET_LOADING`, true);
+      store.commit(`loading/PUSH_TURN`, moduleName);
     },
     after: action => {
       const moduleName = cutAction(action.type);
+
+      store.commit(`loading/REMOVE_TURN`, moduleName);
       store.commit(`${moduleName}/SET_LOADING`, false);
     }
   });
