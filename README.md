@@ -17,7 +17,7 @@ npm i @stfalcon/vuex-loading-plugin
 In `store.js` file
 
 ```
-import loadingPlugin from "stfalcon-vuex-loading-plugin"
+import loadingPlugin from "@stfalcon/vuex-loading-plugin"
 
 const store = new Vuex.Store({
   ...other store options,
@@ -50,10 +50,15 @@ So, if your application has got a global loader and you wanna handling when all 
 
 In your VuexStore included independent `loading module` which have next getters:
 
+```
 getters: {
-isLoading: { ... }, // monitors on everyone actions
-isLoadingModules: state => modules => { ... } // monitors only those modules that you transferred to the getter
+  // monitors on everyone actions
+  isLoading: { ... },
+
+  // monitors only those modules that you transferred to the getter
+  isLoadingModules: state => modules => { ... }
 }
+```
 
 For example, you have tow modules: users and tasks. And we want to check when all actions from both modules completed then disable loader.
 
