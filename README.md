@@ -9,7 +9,7 @@ This library requires vue as a peer dependency.
 ## Installing
 
 ```shell
-npm i stfalcon-vuex-loading-plugin
+npm i @stfalcon/vuex-loading-plugin
 ```
 
 ## Usage
