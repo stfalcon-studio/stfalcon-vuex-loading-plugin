@@ -1,4 +1,4 @@
-# Stfalcon-Vuex-loading-plugin
+# vuex-loading-plugin
 
 The plugin which including to your modules `loading logic`. When you will handle any actions you triggering `loading` mutation. When actions will be done `loading flag` came back to false
 
