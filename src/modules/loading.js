@@ -1,7 +1,7 @@
 export default {
-  state: () => ({
-    isLoading: false
-  }),
+  state: {
+    isLoading: false,
+  },
 
   mutations: {
     SET_LOADING(state, value) {
