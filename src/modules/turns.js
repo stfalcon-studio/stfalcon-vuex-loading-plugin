@@ -23,5 +23,14 @@ export default {
         (_, idx, arr) => idx !== arr.indexOf(moduleName)
       );
     }
+  },
+
+  actions: {
+    clearAll({ state, commit }) {
+      state.turns.forEach(turn => {
+        commit(`${turn}/SET_LOADING`, false, { root: true });
+        commit('REMOVE_TURN', turn);
+      })
+    }
   }
 };
