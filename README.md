@@ -16,7 +16,7 @@ npm i @stfalcon/vuex-loading-plugin
 
 In `store.js` file
 
-```
+```js
 import loadingPlugin from "@stfalcon/vuex-loading-plugin"
 
 const store = new Vuex.Store({
@@ -29,7 +29,7 @@ In `SomeComponent.vue` file
 
 If you want to use local loading just import `isLoading` getter via `mapGetters`
 
-```
+```js
 computed: {
   ...mapGetters('yourModuleName', ['isLoading'])
 }
@@ -37,7 +37,7 @@ computed: {
 
 or
 
-```
+```js
 computed: {
   ...mapGetters('yourModuleName', {
     someKey: 'isLoading'
@@ -50,7 +50,7 @@ So, if your application has got a global loader and you wanna handling when all 
 
 In your VuexStore included independent `loading module` which have next getters:
 
-```
+```js
 getters: {
   // monitors on everyone actions
   isLoading: { ... },
@@ -62,7 +62,7 @@ getters: {
 
 For example, you have tow modules: users and tasks. And we want to check when all actions from both modules completed then disable loader.
 
-```
+```js
 computed: {
   ...mapGetters('loading', ['isLoadingModules']),
   watchOnSelectedModules() {
