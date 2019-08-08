@@ -1,10 +1,11 @@
 # vuex-loading-plugin
 
-The plugin which including to your modules `loading logic`. When you will handle any actions you triggering `loading` mutation. When actions will be done `loading flag` came back to false
+The plugin which including to your modules `loading logic`. When you will handle any actions you triggering `loading` mutation. When actions will be done `loading flag` came back to false. Basically, this plugin indicates async actions for you.
+_Note_: This plugin also make a patch of dispatch method of the vuex, since in original implementation if action fails, then `after` subscribtion is not called. The patch fixed this thing.
 
 ### Prerequisites
 
-This library requires vue as a peer dependency.
+This library requires vue and vuex as a peer dependency.
 
 ## Installing
 
@@ -14,7 +15,7 @@ npm i @stfalcon/vuex-loading-plugin
 
 ## Usage
 
-In `store.js` file
+### In `store.js` file
 
 ```js
 import loadingPlugin from "@stfalcon/vuex-loading-plugin"
@@ -25,48 +26,19 @@ const store = new Vuex.Store({
 })
 ```
 
-In `SomeComponent.vue` file
+### In `SomeComponent.vue` file
 
-If you want to use local loading just import `isLoading` getter via `mapGetters`
-
+You can handle async actions of any namespaced module:
 ```js
 computed: {
   ...mapGetters('yourModuleName', ['isLoading'])
 }
 ```
 
-or
-
+If you want to listen to all async actions of all modules, then you should use global getter:
 ```js
 computed: {
-  ...mapGetters('yourModuleName', {
-    someKey: 'isLoading'
-  })
+  ...mapGetters(['isLoading']),
 }
 ```
-
-Also in this plugin include global loading watcher.
-So, if your application has got a global loader and you wanna handling when all actions ( from your list ) completed watch to next the snippet:
-
-In your VuexStore included independent `loading module` which have next getters:
-
-```js
-getters: {
-  // monitors on everyone actions
-  isLoading: { ... },
-
-  // monitors only those modules that you transferred to the getter
-  isLoadingModules: state => modules => { ... }
-}
-```
-
-For example, you have tow modules: users and tasks. And we want to check when all actions from both modules completed then disable loader.
-
-```js
-computed: {
-  ...mapGetters('loading', ['isLoadingModules']),
-  watchOnSelectedModules() {
-    return this.isLoadingModules(['users', 'todos'])
-  }
-}
-```
+This getter is just an alias for listening `loading` getters of all modules simultaniously.
