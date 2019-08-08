@@ -1,17 +1,16 @@
-export function cutAction(actionType) {
-  const separator = "/";
-  let moduleName = "";
-  let idx = 0;
+import merge from 'lodash.merge';
 
-  for (let i = actionType.length - 1; i > 0; i--) {
-    const char = actionType[i];
-
-    if (char === separator) {
-      idx = i;
-      break;
-    }
+export function loadingModuleRegistrator(store, loadingCoreModule) {
+  return (namespacedModule, addition = {}) => {
+    const modules = namespacedModule.split('/').slice(0, -1);
+    const pathToRegister = [...modules, 'loading'];
+    return store.registerModule(pathToRegister, merge({}, loadingCoreModule, addition));
   }
-  moduleName = actionType.slice(0, idx);
+}
 
-  return moduleName;
+export function parseAction(actionType) {
+    // TODO: we assume that action name doesn't contain `/` sign. Also here can be more optimal solution
+    const [actionName, ...pathToAction] = actionType.split('/').reverse();
+    const moduleName = pathToAction.reverse().join('/');
+    return { actionName, moduleName };
 }
