@@ -22,9 +22,11 @@ import loadingPlugin from "@stfalcon/vuex-loading-plugin"
 
 const store = new Vuex.Store({
   ...other store options,
-  plugins: [loadingPlugin]
+  plugins: [loadingPlugin(options)]
 })
 ```
+`options` contains:
+ - `options.blacklistFilter`: Function(<String>) - receives an action type as argument and allows to blacklist any of action by a rule.
 
 ### In `SomeComponent.vue` file
 
